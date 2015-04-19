@@ -8,6 +8,7 @@
 
 #import "EditMessageVC.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "API.h"
 @interface EditMessageVC ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *dateText;
 @property (weak, nonatomic) IBOutlet UITextField *titleText;
@@ -29,6 +30,65 @@
     return nowTime;
 }
 
+
+-(void)uploadImg:(UIImage *)img {
+    //使用內定值
+    int memoID=1;
+    NSString *UserName =@"oktenokis@yahoo.com.tw";
+    NSString *date =[self getNowTime];
+    //設定伺服器的根目錄
+    NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
+
+    UIImage *image = img;
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:hostRootURL];
+    //accpt text/html
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    //NSDictionary *parameters = @{@"foo": @"bar"};
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"picUp", @"cmd", memoID, @"memo_id", nil];
+    [manager POST:@"login.php" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    //[formData appendPartWithFormData:imageData name:@"userfile"];
+    NSString *fileName = [[NSString alloc]initWithFormat:@"%@%@.jpg", UserName,date];
+    [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/jpeg"];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"imgSuccess: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"imgError: %@", error);
+    }];
+}
+
+
+
+-(void)uploadTitle:(NSString *)title content:(NSString *)content date:(NSString *)date{
+    //使用內定值
+    NSString *boardID=@"1";
+//    NSString *UserName =@"oktenokis@yahoo.com.tw";
+    
+    //設定伺服器的根目錄
+    NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
+    //設定post內容
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"mngSubject", @"cmd",boardID, @"board_id",title,@"subject", content, @"content", date, @"date_time", nil];
+    //產生控制request物件
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:hostRootURL];
+    //accpt text/html
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    //POST
+    [manager POST:@"management.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //request成功之後要做的事
+        //輸出response
+        NSLog(@"response: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //request失敗之後要做的事
+        NSLog(@"request error: %@", error);
+        ;
+    }];
+}
+
+
+
+
+
 -(void)doneCust{
     if (self.flag==1) {
         //新增存擋
@@ -38,7 +98,7 @@
         if (_InfoArray.count){
         [_messageDic setValue:_InfoArray[0] forKey:@"image"];
         }
-    
+        [self uploadTitle:_titleText.text content:_contentText.text date:[self getNowTime]];
         [self.Delegate EditMessageVC:self messageDic:_messageDic];
     }else if (_flag==2){
         //修改存擋

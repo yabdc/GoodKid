@@ -20,8 +20,10 @@
     NSMutableArray *origingroupListArr;
 }
 
--(void)updateBandName:(NSString *)boardName intro:(NSString *)intro{
-        NSString *UserName =@"dark7898@hotmail.com";
+#pragma mark - SQL Method
+
+-(void)uploadBandName:(NSString *)boardName intro:(NSString *)intro{
+        NSString *UserName =@"oktenokis@yahoo.com.tw";
         //設定伺服器的根目錄
         NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
         //設定post內容
@@ -42,8 +44,29 @@
         }];
 }
 
+-(void)renameBandName:(NSString *)boardName intro:(NSString *)intro{
+    NSString *UserName =@"oktenokis@yahoo.com.tw";
+    //設定伺服器的根目錄
+    NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
+    //設定post內容
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"mngBoard", @"cmd",UserName,@"account", boardName, @"boardName", intro, @"intro", nil];
+    //產生控制request物件
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:hostRootURL];
+    //accpt text/html
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    //POST
+    [manager POST:@"management.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //request成功之後要做的事
+        //輸出response
+        NSLog(@"response: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //request失敗之後要做的事
+        NSLog(@"request error: %@", error);
+        ;
+    }];
+}
 
-
+#pragma mark - Main
 - (void)viewDidLoad {
     [super viewDidLoad];
     SWRevealViewController *revealViewController = self.revealViewController;//self為何可以呼叫revealViewController?
@@ -57,6 +80,9 @@
     bandArray = [[NSMutableArray alloc]initWithObjects:@"一年甲班",@"三年六班",@"二年甲班",@"二年乙班",@"五年丙班",@"六年甲班",@"四年乙班",@"二乙班", nil];
     origingroupListArr = [[NSMutableArray alloc]initWithArray:bandArray];
 }
+
+
+
 - (IBAction)addBandAction:(id)sender {
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:@"創造群組"
@@ -78,9 +104,10 @@
                                handler:^(UIAlertAction *action)
                                {
                                    UITextField *name = alertController.textFields.firstObject;
+                                   
                                    [bandArray addObject:name.text];
-                                   UITextField *intro = alertController.textFields.firstObject;
-                                   [self updateBandName:name.text intro:intro.text];
+                                   UITextField *intro = alertController.textFields.lastObject;
+                                   [self uploadBandName:name.text intro:intro.text];
                                    
                                    [self.tableView reloadData];
                                }];
@@ -123,6 +150,7 @@
     return cell;
 }
 
+#pragma mark - Custom Button and Method
 -(UIButton *)addCustAccessoryBtn{
     UIImage *accessoryImg = [UIImage imageNamed:@"settings-25"];
     CGRect imgFrame = CGRectMake(0, 0, accessoryImg.size.width, accessoryImg.size.height);
@@ -189,6 +217,11 @@
                                               message:@""
                                               preferredStyle:UIAlertControllerStyleAlert];
         
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
+         {
+             textField.placeholder = @"群組名稱";
+             textField.text=bandArray[indexPath.row];
+         }];
         [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
          {
              textField.placeholder = @"群組名稱";

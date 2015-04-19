@@ -10,12 +10,12 @@
 		B60EED6E1AE239BE009C1AA7 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6C937161AE22C1D00B6CED1 /* MobileCoreServices.framework */; };
 		B60EED751AE23A3A009C1AA7 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B60EED731AE23A3A009C1AA7 /* FBSDKCoreKit.framework */; };
 		B60EED761AE23A3A009C1AA7 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B60EED741AE23A3A009C1AA7 /* FBSDKLoginKit.framework */; };
-		B60EED821AE23E53009C1AA7 /* EntryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B60EED781AE23E53009C1AA7 /* EntryVC.m */; };
-		B60EED831AE23E53009C1AA7 /* SignUpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B60EED7B1AE23E53009C1AA7 /* SignUpVC.m */; };
-		B60EED841AE23E53009C1AA7 /* ImagePickerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B60EED7D1AE23E53009C1AA7 /* ImagePickerVC.m */; };
-		B60EED851AE23E53009C1AA7 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B60EED7F1AE23E53009C1AA7 /* LoginVC.m */; };
-		B60EED861AE23E53009C1AA7 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B60EED811AE23E53009C1AA7 /* ProfileViewController.m */; };
 		B60EED891AE23EB7009C1AA7 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = B60EED881AE23EB7009C1AA7 /* UIImageView+AFNetworking.m */; };
+		B60EED971AE25651009C1AA7 /* EntryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B60EED8E1AE25651009C1AA7 /* EntryVC.m */; };
+		B60EED981AE25651009C1AA7 /* ImagePickerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B60EED901AE25651009C1AA7 /* ImagePickerVC.m */; };
+		B60EED991AE25651009C1AA7 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B60EED921AE25651009C1AA7 /* LoginVC.m */; };
+		B60EED9A1AE25651009C1AA7 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B60EED941AE25651009C1AA7 /* ProfileViewController.m */; };
+		B60EED9B1AE25651009C1AA7 /* SignUpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B60EED961AE25651009C1AA7 /* SignUpVC.m */; };
 		B6309BC61ADE7DC300B8F8E7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6309BC51ADE7DC300B8F8E7 /* main.m */; };
 		B6309BC91ADE7DC300B8F8E7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6309BC81ADE7DC300B8F8E7 /* AppDelegate.m */; };
 		B6309BCC1ADE7DC300B8F8E7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6309BCB1ADE7DC300B8F8E7 /* ViewController.m */; };
@@ -74,18 +74,18 @@
 /* Begin PBXFileReference section */
 		B60EED731AE23A3A009C1AA7 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		B60EED741AE23A3A009C1AA7 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		B60EED771AE23E53009C1AA7 /* EntryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EntryVC.h; path = ../../../../Downloads/20150417/MemoBoard2/MemoBoard2/EntryVC.h; sourceTree = "<group>"; };
-		B60EED781AE23E53009C1AA7 /* EntryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EntryVC.m; path = ../../../../Downloads/20150417/MemoBoard2/MemoBoard2/EntryVC.m; sourceTree = "<group>"; };
-		B60EED7A1AE23E53009C1AA7 /* SignUpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpVC.h; path = ../../../../Downloads/20150417/MemoBoard2/MemoBoard2/SignUpVC.h; sourceTree = "<group>"; };
-		B60EED7B1AE23E53009C1AA7 /* SignUpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpVC.m; path = ../../../../Downloads/20150417/MemoBoard2/MemoBoard2/SignUpVC.m; sourceTree = "<group>"; };
-		B60EED7C1AE23E53009C1AA7 /* ImagePickerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagePickerVC.h; path = ../../../../Downloads/20150417/MemoBoard2/MemoBoard2/ImagePickerVC.h; sourceTree = "<group>"; };
-		B60EED7D1AE23E53009C1AA7 /* ImagePickerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImagePickerVC.m; path = ../../../../Downloads/20150417/MemoBoard2/MemoBoard2/ImagePickerVC.m; sourceTree = "<group>"; };
-		B60EED7E1AE23E53009C1AA7 /* LoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginVC.h; path = ../../../../Downloads/20150417/MemoBoard2/MemoBoard2/LoginVC.h; sourceTree = "<group>"; };
-		B60EED7F1AE23E53009C1AA7 /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginVC.m; path = ../../../../Downloads/20150417/MemoBoard2/MemoBoard2/LoginVC.m; sourceTree = "<group>"; };
-		B60EED801AE23E53009C1AA7 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = ../../../../Downloads/20150417/MemoBoard2/MemoBoard2/ProfileViewController.h; sourceTree = "<group>"; };
-		B60EED811AE23E53009C1AA7 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = ../../../../Downloads/20150417/MemoBoard2/MemoBoard2/ProfileViewController.m; sourceTree = "<group>"; };
 		B60EED871AE23EB7009C1AA7 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+AFNetworking.h"; path = "../UIKit+AFNetworking/UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		B60EED881AE23EB7009C1AA7 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+AFNetworking.m"; path = "../UIKit+AFNetworking/UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		B60EED8D1AE25651009C1AA7 /* EntryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryVC.h; sourceTree = "<group>"; };
+		B60EED8E1AE25651009C1AA7 /* EntryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryVC.m; sourceTree = "<group>"; };
+		B60EED8F1AE25651009C1AA7 /* ImagePickerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerVC.h; sourceTree = "<group>"; };
+		B60EED901AE25651009C1AA7 /* ImagePickerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerVC.m; sourceTree = "<group>"; };
+		B60EED911AE25651009C1AA7 /* LoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
+		B60EED921AE25651009C1AA7 /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
+		B60EED931AE25651009C1AA7 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		B60EED941AE25651009C1AA7 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		B60EED951AE25651009C1AA7 /* SignUpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpVC.h; sourceTree = "<group>"; };
+		B60EED961AE25651009C1AA7 /* SignUpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpVC.m; sourceTree = "<group>"; };
 		B6309BC01ADE7DC300B8F8E7 /* GoodKids.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoodKids.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6309BC41ADE7DC300B8F8E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6309BC51ADE7DC300B8F8E7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -187,16 +187,16 @@
 		B60EED8C1AE24749009C1AA7 /* Log */ = {
 			isa = PBXGroup;
 			children = (
-				B60EED771AE23E53009C1AA7 /* EntryVC.h */,
-				B60EED781AE23E53009C1AA7 /* EntryVC.m */,
-				B60EED7A1AE23E53009C1AA7 /* SignUpVC.h */,
-				B60EED7B1AE23E53009C1AA7 /* SignUpVC.m */,
-				B60EED7C1AE23E53009C1AA7 /* ImagePickerVC.h */,
-				B60EED7D1AE23E53009C1AA7 /* ImagePickerVC.m */,
-				B60EED7E1AE23E53009C1AA7 /* LoginVC.h */,
-				B60EED7F1AE23E53009C1AA7 /* LoginVC.m */,
-				B60EED801AE23E53009C1AA7 /* ProfileViewController.h */,
-				B60EED811AE23E53009C1AA7 /* ProfileViewController.m */,
+				B60EED8D1AE25651009C1AA7 /* EntryVC.h */,
+				B60EED8E1AE25651009C1AA7 /* EntryVC.m */,
+				B60EED8F1AE25651009C1AA7 /* ImagePickerVC.h */,
+				B60EED901AE25651009C1AA7 /* ImagePickerVC.m */,
+				B60EED911AE25651009C1AA7 /* LoginVC.h */,
+				B60EED921AE25651009C1AA7 /* LoginVC.m */,
+				B60EED931AE25651009C1AA7 /* ProfileViewController.h */,
+				B60EED941AE25651009C1AA7 /* ProfileViewController.m */,
+				B60EED951AE25651009C1AA7 /* SignUpVC.h */,
+				B60EED961AE25651009C1AA7 /* SignUpVC.m */,
 			);
 			name = Log;
 			sourceTree = "<group>";
@@ -533,16 +533,20 @@
 			files = (
 				B6309C1A1ADE870000B8F8E7 /* ProfileVC.m in Sources */,
 				B6309C2E1ADE880300B8F8E7 /* SearchTVC.m in Sources */,
-				B60EED861AE23E53009C1AA7 /* ProfileViewController.m in Sources */,
+				B60EED9A1AE25651009C1AA7 /* ProfileViewController.m in Sources */,
+				B60EED9B1AE25651009C1AA7 /* SignUpVC.m in Sources */,
 				B6B9028E1AE2354A0011EF43 /* AFSecurityPolicy.m in Sources */,
 				B6B9028B1AE2354A0011EF43 /* AFHTTPRequestOperationManager.m in Sources */,
 				B6B9028A1AE2354A0011EF43 /* AFHTTPRequestOperation.m in Sources */,
 				B6309C061ADE84BF00B8F8E7 /* FollowContentTVC.m in Sources */,
 				B6309C031ADE84A200B8F8E7 /* FollowListTVC.m in Sources */,
 				B6309C2B1ADE87EE00B8F8E7 /* AdminMainTVC-2.m in Sources */,
+				B60EED971AE25651009C1AA7 /* EntryVC.m in Sources */,
 				B6B902751AE235370011EF43 /* SWRevealViewController.m in Sources */,
 				B6309C281ADE87DD00B8F8E7 /* AdminMainTVC.m in Sources */,
 				B6309BCC1ADE7DC300B8F8E7 /* ViewController.m in Sources */,
+				B60EED981AE25651009C1AA7 /* ImagePickerVC.m in Sources */,
+				B60EED991AE25651009C1AA7 /* LoginVC.m in Sources */,
 				B6309BC91ADE7DC300B8F8E7 /* AppDelegate.m in Sources */,
 				B6309C371ADE890C00B8F8E7 /* ShowMessageVC.m in Sources */,
 				B6B9028C1AE2354A0011EF43 /* AFHTTPSessionManager.m in Sources */,
@@ -551,19 +555,15 @@
 				B6B9028F1AE2354A0011EF43 /* AFURLConnectionOperation.m in Sources */,
 				B6B902901AE2354A0011EF43 /* AFURLRequestSerialization.m in Sources */,
 				B6B902921AE2354A0011EF43 /* AFURLSessionManager.m in Sources */,
-				B60EED831AE23E53009C1AA7 /* SignUpVC.m in Sources */,
 				B6B902911AE2354A0011EF43 /* AFURLResponseSerialization.m in Sources */,
 				B6309C341ADE88EC00B8F8E7 /* EditMessageVC.m in Sources */,
-				B60EED821AE23E53009C1AA7 /* EntryVC.m in Sources */,
 				B6CD12181ADF8B3D00071A46 /* API.m in Sources */,
 				B6309C3A1ADE8A4A00B8F8E7 /* SidebarTVC.m in Sources */,
 				B6309BC61ADE7DC300B8F8E7 /* main.m in Sources */,
 				B6B902731AE235370011EF43 /* MBProgressHUD.m in Sources */,
 				B6B9028D1AE2354A0011EF43 /* AFNetworkReachabilityManager.m in Sources */,
-				B60EED841AE23E53009C1AA7 /* ImagePickerVC.m in Sources */,
 				B6B902741AE235370011EF43 /* Reachability.m in Sources */,
 				B60EED891AE23EB7009C1AA7 /* UIImageView+AFNetworking.m in Sources */,
-				B60EED851AE23E53009C1AA7 /* LoginVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
