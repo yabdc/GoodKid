@@ -18,6 +18,7 @@
 {
     NSMutableArray *bandArray;
     NSMutableArray *origingroupListArr;
+    NSString *boardID;
 }
 
 #pragma mark - SQL Method
@@ -45,11 +46,12 @@
 }
 
 -(void)renameBandName:(NSString *)boardName intro:(NSString *)intro{
-    NSString *UserName =@"oktenokis@yahoo.com.tw";
+//    NSString *UserName =@"oktenokis@yahoo.com.tw";
+    
     //設定伺服器的根目錄
     NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
     //設定post內容
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"mngBoard", @"cmd",UserName,@"account", boardName, @"boardName", intro, @"intro", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"updateBoard", @"cmd",boardID,@"board_id", boardName, @"boardName", intro, @"intro", nil];
     //產生控制request物件
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:hostRootURL];
     //accpt text/html
@@ -66,6 +68,35 @@
     }];
 }
 
+-(void)deleteBand{
+    //    NSString *UserName =@"oktenokis@yahoo.com.tw";
+    
+    //設定伺服器的根目錄
+    NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
+    //設定post內容
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"deleteBoard", @"cmd",boardID,@"board_id", nil];
+    //產生控制request物件
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:hostRootURL];
+    //accpt text/html
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    //POST
+    [manager POST:@"management.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //request成功之後要做的事
+        //輸出response
+        NSLog(@"response: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //request失敗之後要做的事
+        NSLog(@"request error: %@", error);
+        ;
+    }];
+}
+
+
+#pragma mark - Custom Method
+- (void)informationReload {
+    origingroupListArr = [[NSMutableArray alloc]initWithArray:bandArray];
+    [self.tableView reloadData];
+}
 #pragma mark - Main
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,10 +108,15 @@
     }
 
     self.searchBar.delegate=self;
-    bandArray = [[NSMutableArray alloc]initWithObjects:@"一年甲班",@"三年六班",@"二年甲班",@"二年乙班",@"五年丙班",@"六年甲班",@"四年乙班",@"二乙班", nil];
+    bandArray = [NSMutableArray new];
     origingroupListArr = [[NSMutableArray alloc]initWithArray:bandArray];
 }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    boardID=@"7";
+}
 
 
 - (IBAction)addBandAction:(id)sender {
@@ -104,12 +140,12 @@
                                handler:^(UIAlertAction *action)
                                {
                                    UITextField *name = alertController.textFields.firstObject;
-                                   
-                                   [bandArray addObject:name.text];
                                    UITextField *intro = alertController.textFields.lastObject;
+                                   NSDictionary *dic =@{@"name":name.text,
+                                                        @"intro":intro.text};
+                                   [bandArray addObject:dic];
                                    [self uploadBandName:name.text intro:intro.text];
-                                   
-                                   [self.tableView reloadData];
+                                   [self informationReload];
                                }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         //
@@ -144,7 +180,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     cell.accessoryView = [self addCustAccessoryBtn];
-    cell.textLabel.text= bandArray[indexPath.row];
+    cell.textLabel.text= bandArray[indexPath.row][@"name"];
     // Configure the cell...
     
     return cell;
@@ -199,6 +235,7 @@
                                    {
                                        [bandArray removeObjectAtIndex:indexPath.row];
                                        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                                       [self deleteBand];
                                    }];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             //
@@ -220,12 +257,12 @@
         [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
          {
              textField.placeholder = @"群組名稱";
-             textField.text=bandArray[indexPath.row];
+             textField.text=bandArray[indexPath.row][@"name"];
          }];
         [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
          {
              textField.placeholder = @"群組名稱";
-             textField.text=bandArray[indexPath.row];
+             textField.text=bandArray[indexPath.row][@"intro"];
          }];
         
         UIAlertAction *okAction = [UIAlertAction
@@ -234,9 +271,13 @@
                                    handler:^(UIAlertAction *action)
                                    {
                                        UITextField *name = alertController.textFields.firstObject;
-                                       bandArray[indexPath.row]=name.text;
+                                       UITextField *intro = alertController.textFields.lastObject;
+                                       NSDictionary *dic =@{@"name":name.text,
+                                                            @"intro":intro.text};
+                                       bandArray[indexPath.row]=dic;
+                                       [self renameBandName:name.text intro:intro.text];
+                                       [self informationReload];
                                        
-                                       [self.tableView reloadData];
                                    }];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             //
