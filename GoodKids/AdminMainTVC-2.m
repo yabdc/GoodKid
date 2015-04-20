@@ -9,6 +9,7 @@
 #import "AdminMainTVC-2.h"
 #import "EditMessageVC.h"
 #import "ShowMessageVC.h"
+#import "API.h"
 @interface AdminMainTVC_2 ()<EditMessageVCDelegate>
 
 @end
@@ -16,7 +17,36 @@
 @implementation AdminMainTVC_2
 {
     NSMutableArray *messageArray;
+    NSString *memoID;
 }
+
+#pragma mark - SQL Method
+-(void)deleteMemo{
+    //    NSString *UserName =@"oktenokis@yahoo.com.tw";
+    
+    //設定伺服器的根目錄
+    NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
+    //設定post內容
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"deleteSubject", @"cmd",memoID,@"memo_id", nil];
+    //產生控制request物件
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:hostRootURL];
+    //accpt text/html
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    //POST
+    [manager POST:@"management.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //request成功之後要做的事
+        //輸出response
+        NSLog(@"response: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //request失敗之後要做的事
+        NSLog(@"request error: %@", error);
+        ;
+    }];
+}
+
+
+
+
 - (IBAction)addMessage:(id)sender {
     EditMessageVC *vc =[self.storyboard instantiateViewControllerWithIdentifier:@"customView"];
     vc.Delegate=self;
@@ -32,7 +62,7 @@
     [self.tableView reloadData];
 }
 
-
+#pragma mark - Main
 - (void)viewDidLoad {
     [super viewDidLoad];
     messageArray=[NSMutableArray new];
@@ -40,6 +70,11 @@
 //    self.navigationController.navigationBar.translucent = NO;
 }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    memoID=@"5";
+}
 
 
 
@@ -129,7 +164,9 @@
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK action")
                                                            style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
                                    {
+                                       [self deleteMemo];
                                        [messageArray removeObjectAtIndex:indexPath.row];
+
                                        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
                                    }];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {

@@ -20,6 +20,14 @@
 @end
 
 @implementation EditMessageVC
+{
+    NSString *boardID;
+    NSString *memoID;
+    NSString *UserName;
+}
+
+
+
 -(NSString *)getNowTime{
     NSDate *now = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -30,11 +38,9 @@
     return nowTime;
 }
 
-
+#pragma mark - SQL Method
 -(void)uploadImg:(UIImage *)img {
     //使用內定值
-    int memoID=1;
-    NSString *UserName =@"oktenokis@yahoo.com.tw";
     NSString *date =[self getNowTime];
     //設定伺服器的根目錄
     NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
@@ -61,7 +67,7 @@
 
 -(void)uploadTitle:(NSString *)title content:(NSString *)content date:(NSString *)date{
     //使用內定值
-    NSString *boardID=@"1";
+    
 //    NSString *UserName =@"oktenokis@yahoo.com.tw";
     
     //設定伺服器的根目錄
@@ -85,10 +91,35 @@
     }];
 }
 
+-(void)editTitle:(NSString *)title content:(NSString *)content date:(NSString *)date{
+    //使用內定值
+    
+    //    NSString *UserName =@"oktenokis@yahoo.com.tw";
+    
+    //設定伺服器的根目錄
+    NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
+    //設定post內容
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"updateSubject", @"cmd",memoID, @"memo_id",title,@"subject", content, @"content", date, @"date_time", nil];
+    //產生控制request物件
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:hostRootURL];
+    //accpt text/html
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    //POST
+    [manager POST:@"management.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //request成功之後要做的事
+        //輸出response
+        NSLog(@"response: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //request失敗之後要做的事
+        NSLog(@"request error: %@", error);
+        ;
+    }];
+}
 
 
 
-
+#pragma mark - SQL Control
 -(void)doneCust{
     if (self.flag==1) {
         //新增存擋
@@ -108,6 +139,9 @@
         if (_InfoArray.count){
             [_messageDic setValue:_InfoArray[0] forKey:@"image"];
         }
+        
+        [self editTitle:_titleText.text content:_contentText.text date:[self getNowTime]];
+        
         [self.Delegate EditMessageVC:self messageDic:_messageDic];
     }
     
@@ -115,7 +149,7 @@
 }
 
 
-
+#pragma mark - Main
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -133,13 +167,16 @@
         //修改模式
         self.title=@"Edit Message";
         NSLog(@"%@",_receiveEditDic);
-        _InfoArray[0]=_receiveEditDic[@"image"];
+        if (!(_receiveEditDic[@"image"] ==nil)){
+            _InfoArray[0]=_receiveEditDic[@"image"];
+        }
+
         _titleText.text=_receiveEditDic[@"title"];
         _dateText.text=_receiveEditDic[@"date"];
         _contentText.text=_receiveEditDic[@"content"];
-//        if (_InfoArray.count){
-//            _imageView1.image=_receiveEditDic[@"image"];
-//        }
+        if (_InfoArray.count){
+            _imageView1.image=_receiveEditDic[@"image"];
+        }
         
         [_button setBackgroundColor:[UIColor clearColor]];
         [_button setTitle:@"" forState:UIControlStateNormal];
@@ -147,6 +184,13 @@
 
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    boardID=@"8";
+    memoID=@"4";
+    UserName=@"oktenokis@yahoo.com.tw";
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

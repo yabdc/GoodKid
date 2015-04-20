@@ -115,7 +115,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    boardID=@"7";
+    boardID=@"8";
 }
 
 
