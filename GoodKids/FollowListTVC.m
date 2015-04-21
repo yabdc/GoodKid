@@ -19,8 +19,10 @@
     NSMutableArray *FollowList;
 }
 
--(void)updateBandName:(NSString *)boardName intro:(NSString *)intro{
-    NSString *UserName =@"dark7898@hotmail.com";
+
+
+-(void)showFollowBand{
+    NSString *UserName =@"oktenokis@yahoo.com.tw";
     //啟動一個hud
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     //設定hud顯示文字
@@ -28,7 +30,7 @@
     //設定伺服器的根目錄
     NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
     //設定post內容
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"follow", @"cmd",UserName,@"account", nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"showFollow", @"cmd",UserName,@"account", nil];
     //產生控制request物件
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:hostRootURL];
     //accpt text/html
@@ -66,7 +68,7 @@
 //    NSArray *textArray=@[@"一年甲班",@"三年六班",@"二年乙班"];
     FollowList = [NSMutableArray new];
     
-//    [self updateBandName:@"" intro:@""];
+    [self showFollowBand];
 }
 
 - (void)didReceiveMemoryWarning {

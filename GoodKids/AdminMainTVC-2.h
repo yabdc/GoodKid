@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface AdminMainTVC_2 : UITableViewController
-
+@property (assign) NSInteger *reveiceboardID;
 @end

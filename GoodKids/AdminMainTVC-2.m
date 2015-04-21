@@ -18,6 +18,7 @@
 {
     NSMutableArray *messageArray;
     NSString *memoID;
+    NSString *boardID;
 }
 
 #pragma mark - SQL Method
@@ -44,9 +45,29 @@
     }];
 }
 
+-(void)showMemo{
+    //設定伺服器的根目錄
+    NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
+    //設定post內容
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"showSubject", @"cmd",boardID ,@"board_id", nil];
+    //產生控制request物件
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:hostRootURL];
+    //accpt text/html
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    //POST
+    [manager POST:@"management.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //request成功之後要做的事
+        //輸出response
+        NSLog(@"response: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //request失敗之後要做的事
+        NSLog(@"request error: %@", error);
+        ;
+    }];
+}
 
 
-
+#pragma mark - ADD AND Delegate
 - (IBAction)addMessage:(id)sender {
     EditMessageVC *vc =[self.storyboard instantiateViewControllerWithIdentifier:@"customView"];
     vc.Delegate=self;
@@ -73,7 +94,11 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    NSLog(@"%ld",(long)_reveiceboardID);
     memoID=@"5";
+    boardID=[NSString stringWithFormat: @"%ld", (long)_reveiceboardID];
+    [self showMemo];
+    
 }
 
 

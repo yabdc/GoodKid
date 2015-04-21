@@ -7,6 +7,7 @@
 //
 #import "API.h"
 #import "AdminMainTVC.h"
+#import "AdminMainTVC-2.h"
 #import "SWRevealViewController.h"
 #import "AFNetworking.h"
 @interface AdminMainTVC ()<UISearchBarDelegate>
@@ -19,12 +20,13 @@
     NSMutableArray *bandArray;
     NSMutableArray *origingroupListArr;
     NSString *boardID;
+    NSString *UserName;
 }
 
 #pragma mark - SQL Method
 
 -(void)uploadBandName:(NSString *)boardName intro:(NSString *)intro{
-        NSString *UserName =@"oktenokis@yahoo.com.tw";
+    
         //設定伺服器的根目錄
         NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
         //設定post內容
@@ -46,7 +48,7 @@
 }
 
 -(void)renameBandName:(NSString *)boardName intro:(NSString *)intro{
-//    NSString *UserName =@"oktenokis@yahoo.com.tw";
+
     
     //設定伺服器的根目錄
     NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
@@ -69,7 +71,7 @@
 }
 
 -(void)deleteBand{
-    //    NSString *UserName =@"oktenokis@yahoo.com.tw";
+    
     
     //設定伺服器的根目錄
     NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
@@ -90,6 +92,32 @@
         ;
     }];
 }
+
+-(void)showAdminList{
+    
+    
+    //設定伺服器的根目錄
+    NSURL *hostRootURL = [NSURL URLWithString: ServerApiURL];
+    //設定post內容
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"boardList", @"cmd",UserName,@"account", nil];
+    //產生控制request物件
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:hostRootURL];
+    //accpt text/html
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    //POST
+    [manager POST:@"management.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //request成功之後要做的事
+        //輸出response
+        bandArray =responseObject[@"api"];
+        [self.tableView reloadData];
+        NSLog(@"response: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //request失敗之後要做的事
+        NSLog(@"request error: %@", error);
+        ;
+    }];
+}
+
 
 
 #pragma mark - Custom Method
@@ -116,6 +144,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     boardID=@"8";
+    UserName =@"oktenokis@yahoo.com.tw";
+    [self showAdminList];
 }
 
 
@@ -141,7 +171,7 @@
                                {
                                    UITextField *name = alertController.textFields.firstObject;
                                    UITextField *intro = alertController.textFields.lastObject;
-                                   NSDictionary *dic =@{@"name":name.text,
+                                   NSDictionary *dic =@{@"board_name":name.text,
                                                         @"intro":intro.text};
                                    [bandArray addObject:dic];
                                    [self uploadBandName:name.text intro:intro.text];
@@ -180,7 +210,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     cell.accessoryView = [self addCustAccessoryBtn];
-    cell.textLabel.text= bandArray[indexPath.row][@"name"];
+    cell.textLabel.text= bandArray[indexPath.row][@"board_name"];
+    cell.tag = [bandArray[indexPath.row][@"board_id"] integerValue];
     // Configure the cell...
     
     return cell;
@@ -257,7 +288,7 @@
         [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
          {
              textField.placeholder = @"群組名稱";
-             textField.text=bandArray[indexPath.row][@"name"];
+             textField.text=bandArray[indexPath.row][@"board_name"];
          }];
         [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
          {
@@ -272,7 +303,7 @@
                                    {
                                        UITextField *name = alertController.textFields.firstObject;
                                        UITextField *intro = alertController.textFields.lastObject;
-                                       NSDictionary *dic =@{@"name":name.text,
+                                       NSDictionary *dic =@{@"board_name":name.text,
                                                             @"intro":intro.text};
                                        bandArray[indexPath.row]=dic;
                                        [self renameBandName:name.text intro:intro.text];
@@ -300,6 +331,13 @@
     [alertController addAction:deleteAction];
     [alertController addAction:cancelAction];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    AdminMainTVC_2 *tvc=segue.destinationViewController;
+    NSIndexPath *indexPath=self.tableView.indexPathForSelectedRow;
+    tvc.reveiceboardID=[bandArray[indexPath.row][@"board_id"] integerValue];
 }
 
 /*
